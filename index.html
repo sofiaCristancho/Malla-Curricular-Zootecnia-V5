@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Malla Zootecnia Interactiva</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3e5f5;
+      margin: 0;
+      padding: 20px;
+      overflow-x: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #6a1b9a;
+    }
+    .progreso-container {
+      max-width: 800px;
+      margin: 10px auto;
+      background: #f8bbd0;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .progreso-barra {
+      background: #b3e5fc;
+      height: 20px;
+      width: 0%;
+      transition: width 0.5s;
+    }
+    .malla {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding: 20px 0;
+    }
+    .semestre {
+      background: #fff;
+      border-radius: 12px;
+      padding: 15px;
+      min-width: 250px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-top: 6px solid #ec407a;
+    }
+    .semestre h2 {
+      text-align: center;
+      color: #d81b60;
+    }
+    .materia {
+      background-color: #f8bbd0;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      text-align: left;
+      transition: 0.3s;
+    }
+    .materia:hover {
+      background-color: #f48fb1;
+    }
+    .materia.checked {
+      background-color: #b3e5fc !important;
+      color: #01579b;
+      text-decoration: line-through;
+    }
+    .materia.locked {
+      background-color: #e1bee7;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    .materia .titulo {
+      font-weight: bold;
+    }
+    .materia small {
+      display: block;
+      font-size: 12px;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Malla Curricular - Zootecnia UdeA</h1>
+
+  <!-- BARRA DE PROGRESO -->
+  <div class="progreso-container">
+    <div class="progreso-barra" id="barra"></div>
+  </div>
+
+  <div class="malla">
+    <!-- SEMESTRE 1 -->
+    <div class="semestre">
+      <h2>1° Semestre</h2>
+      <div class="materia" onclick="toggle(this)" data-id="matematicas" data-creditos="3">
+        <div class="titulo">Matemáticas</div>
+        <small>Código: 5007550 | Créditos: 3</small>
+        <small>Pre: Ninguno | Co: Ninguno</small>
+      </div>
+      <div class="materia" onclick="toggle(this)" data-id="biologia" data-creditos="3">
+        <div class="titulo">Biología General</div>
+        <small>Código: 5007552 | Créditos: 3</small>
+        <small>Pre: Ninguno | Co: Ninguno</small>
+      </div>
+      <div class="materia" onclick="toggle(this)" data-id="quimica" data-creditos="3">
+        <div class="titulo">Química General</div>
+        <small>Código: 5007551 | Créditos: 3</small>
+        <small>Pre: Ninguno | Co: Ninguno</small>
+      </div>
+      <div class="materia" onclick="toggle(this)" data-id="informatica" data-creditos="2">
+        <div class="titulo">Informática</div>
+        <small>Código: 5007549 | Créditos: 2</small>
+        <small>Pre: Ninguno | Co: Ninguno</small>
+      </div>
+      <div class="materia" onclick="toggle(this)" data-id="comunicacion" data-creditos="2">
+        <div class="titulo">Habilidades de la Comunicación</div>
+        <small>Código: 5007641 | Créditos: 2</small>
+        <small>Pre: Ninguno | Co: Ninguno</small>
+      </div>
+      <div class="materia" onclick="toggle(this)" data-id="zootrad" data-creditos="3">
+        <div class="titulo">Intro. Esp. Zoot. Tradicionales</div>
+        <small>Código: 5007564 | Créditos: 3</small>
+        <small>Pre: Ninguno | Co: Ninguno</small>
+      </div>
+      <div class="materia" onclick="toggle(this)" data-id="ingles1" data-creditos="2">
+        <div class="titulo">Inglés 1</div>
+        <small>Código: 9050101 | Créditos: 2</small>
+        <small>Pre: Ninguno | Co: Ninguno</small>
+      </div>
+    </div>
+
+    <!-- SEMESTRE 2 -->
+    <div class="semestre">
+      <h2>2° Semestre</h2>
+      <div class="materia locked" onclick="toggle(this)" data-id="economia" data-prereq="matematicas" data-creditos="3">
+        <div class="titulo">Economía</div>
+        <small>Código: 5007636 | Créditos: 3</small>
+        <small>Pre: Matemáticas | Co: Ninguno</small>
+      </div>
+      <div class="materia locked" onclick="toggle(this)" data-id="calculo" data-prereq="matematicas" data-creditos="3">
+        <div class="titulo">Cálculo</div>
+        <small>Código: 5007553 | Créditos: 3</small>
+        <small>Pre: Matemáticas | Co: Ninguno</small>
+      </div>
+      <div class="materia locked" onclick="toggle(this)" data-id="orgquimica" data-prereq="quimica" data-creditos="3">
+        <div class="titulo">Química Orgánica</div>
+        <small>Código: 5007555 | Créditos: 3</small>
+        <small>Pre: Química General | Co: Ninguno</small>
+      </div>
+      <div class="materia locked" onclick="toggle(this)" data-id="microbiologia" data-prereq="biologia" data-creditos="3">
+        <div class="titulo">Microbiología</div>
+        <small>Código: 5007563 | Créditos: 3</small>
+        <small>Pre: Biología General | Co: Ninguno</small>
+      </div>
+      <div class="materia" onclick="toggle(this)" data-id="zootnotrad" data-creditos="3">
+        <div class="titulo">Intro. Esp. Zoot. No Tradicionales</div>
+        <small>Código: 5007565 | Créditos: 3</small>
+        <small>Pre: Ninguno | Co: Ninguno</small>
+      </div>
+      <div class="materia locked" onclick="toggle(this)" data-id="ingles2" data-prereq="ingles1" data-creditos="2">
+        <div class="titulo">Inglés 2</div>
+        <small>Código: 9050102 | Créditos: 2</small>
+        <small>Pre: Inglés 1 | Co: Ninguno</small>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggle(el) {
+      if (el.classList.contains("locked")) return;
+      el.classList.toggle("checked");
+      actualizarBloqueos();
+      actualizarCreditos();
+    }
+
+    function actualizarBloqueos() {
+      document.querySelectorAll('.materia[data-prereq]').forEach(materia => {
+        const prereq = materia.dataset.prereq;
+        const requisito = document.querySelector(`[data-id="${prereq}"]`);
+        const aprobado = requisito && requisito.classList.contains("checked");
+        materia.classList.toggle("locked", !aprobado);
+      });
+    }
+
+    function actualizarCreditos() {
+      const materias = document.querySelectorAll('.materia.checked');
+      let total = 0;
+      materias.forEach(mat => total += parseInt(mat.dataset.creditos || 0));
+      const barra = document.getElementById("barra");
+      barra.style.width = `${(total / 181) * 100}%`; // Total del plan: 181 créditos
+    }
+
+    actualizarBloqueos();
+    actualizarCreditos();
+  </script>
+</body>
+</html>
+<!-- SEMESTRE 3 -->
+<div class="semestre">
+  <h2>3° Semestre</h2>
+  <div class="materia locked" onclick="toggle(this)" data-id="bioestadistica" data-prereq="calculo" data-creditos="3">
+    <div class="titulo">Bioestadística</div>
+    <small>Código: 5007557 | Créditos: 3</small>
+    <small>Pre: Cálculo | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="biofisica" data-prereq="calculo" data-creditos="3">
+    <div class="titulo">Biofísica</div>
+    <small>Código: 5007554 | Créditos: 3</small>
+    <small>Pre: Cálculo | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="morfologia" data-prereq="biologia" data-creditos="3">
+    <div class="titulo">Morfología Animal</div>
+    <small>Código: 5007560 | Créditos: 3</small>
+    <small>Pre: Biología General | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="botanica" data-prereq="biologia" data-creditos="3">
+    <div class="titulo">Botánica y Fisiología Vegetal</div>
+    <small>Código: 5007556 | Créditos: 3</small>
+    <small>Pre: Biología General | Co: Bioquímica</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="bioquimica" data-prereq="orgquimica" data-creditos="3">
+    <div class="titulo">Bioquímica</div>
+    <small>Código: 5007558 | Créditos: 3</small>
+    <small>Pre: Biología General y Química Orgánica | Co: Botánica</small>
+  </div>
+  <div class="materia" onclick="toggle(this)" data-id="electiva_integral" data-creditos="2">
+    <div class="titulo">Electiva de Formación Integral</div>
+    <small>Código: N/A | Créditos: 2</small>
+    <small>Pre: Ninguno | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="ingles3" data-prereq="ingles2" data-creditos="2">
+    <div class="titulo">Inglés 3</div>
+    <small>Código: 9050103 | Créditos: 2</small>
+    <small>Pre: Inglés 2 | Co: Ninguno</small>
+  </div>
+</div>
+
+<!-- SEMESTRE 4 -->
+<div class="semestre">
+  <h2>4° Semestre</h2>
+  <div class="materia locked" onclick="toggle(this)" data-id="gerencia" data-prereq="economia" data-creditos="3">
+    <div class="titulo">Gerencia Agropecuaria</div>
+    <small>Código: 5007637 | Créditos: 3</small>
+    <small>Pre: Economía | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="diseno" data-prereq="bioestadistica" data-creditos="3">
+    <div class="titulo">Diseño Experimental</div>
+    <small>Código: 5007561 | Créditos: 3</small>
+    <small>Pre: Bioestadística | Co: Edafología</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="genetica" data-prereq="bioestadistica" data-creditos="3">
+    <div class="titulo">Genética Animal</div>
+    <small>Código: 5007566 | Créditos: 3</small>
+    <small>Pre: Biología General y Bioestadística | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="fisiologia" data-prereq="biofisica" data-creditos="3">
+    <div class="titulo">Fisiología Animal</div>
+    <small>Código: 5007562 | Créditos: 3</small>
+    <small>Pre: Biofísica, Morfología y Bioquímica | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="nutricion_basica" data-prereq="bioquimica" data-creditos="3">
+    <div class="titulo">Nutrición Animal Básica</div>
+    <small>Código: 5007567 | Créditos: 3</small>
+    <small>Pre: Bioquímica | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="edafologia" data-prereq="quimica" data-creditos="3">
+    <div class="titulo">Edafología</div>
+    <small>Código: 5007559 | Créditos: 3</small>
+    <small>Pre: Química General, Botánica | Co: Diseño Experimental</small>
+  </div>
+</div>
+<!-- SEMESTRE 5 -->
+<div class="semestre">
+  <h2>5° Semestre</h2>
+  <div class="materia locked" onclick="toggle(this)" data-id="gestion" data-prereq="gerencia" data-creditos="3">
+    <div class="titulo">Gestión Financiera</div>
+    <small>Código: 5007638 | Créditos: 3</small>
+    <small>Pre: Gerencia Agropecuaria | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="desarrollo" data-prereq="economia" data-creditos="3">
+    <div class="titulo">Desarrollo Social y Extensión Agropecuaria</div>
+    <small>Código: 5007644 | Créditos: 3</small>
+    <small>Pre: Economía | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="genetica_cuant" data-prereq="genetica" data-creditos="2">
+    <div class="titulo">Genética Cuantitativa</div>
+    <small>Código: 5007568 | Créditos: 2</small>
+    <small>Pre: Genética Animal, Diseño Experimental | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="maquinaria" data-prereq="biofisica" data-creditos="3">
+    <div class="titulo">Principios de Maquinaria Agropecuaria</div>
+    <small>Código: 5007571 | Créditos: 3</small>
+    <small>Pre: Biofísica | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="alimentos" data-prereq="nutricion_basica" data-creditos="3">
+    <div class="titulo">Alimentos Concentrados para Animales</div>
+    <small>Código: 5007569 | Créditos: 3</small>
+    <small>Pre: Nutrición Animal Básica | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="agroecologia" data-prereq="edafologia" data-creditos="3">
+    <div class="titulo">Agroecología</div>
+    <small>Código: 5007559 | Créditos: 3</small>
+    <small>Pre: Edafología | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="ingles5" data-prereq="ingles3" data-creditos="2">
+    <div class="titulo">Inglés 5</div>
+    <small>Código: 9050105 | Créditos: 2</small>
+    <small>Pre: Inglés 4 | Co: Ninguno</small>
+  </div>
+</div>
+
+<!-- SEMESTRE 6 -->
+<div class="semestre">
+  <h2>6° Semestre</h2>
+  <div class="materia locked" onclick="toggle(this)" data-id="mercadeo" data-prereq="gestion" data-creditos="3">
+    <div class="titulo">Mercadeo</div>
+    <small>Código: 5007639 | Créditos: 3</small>
+    <small>Pre: Gestión Financiera | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="metodologia" data-prereq="diseno" data-creditos="2">
+    <div class="titulo">Metodología de la Investigación</div>
+    <small>Código: 5007647 | Créditos: 2</small>
+    <small>Pre: Diseño Experimental | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="mejoramiento" data-prereq="genetica_cuant" data-creditos="3">
+    <div class="titulo">Mejoramiento Genético Animal</div>
+    <small>Código: 5007576 | Créditos: 3</small>
+    <small>Pre: Genética Cuantitativa | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="infraestructura" data-prereq="maquinaria" data-creditos="3">
+    <div class="titulo">Infraestructura Agropecuaria</div>
+    <small>Código: 5007573 | Créditos: 3</small>
+    <small>Pre: Ppios. Maq. Agropecuaria | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="reproduccion" data-prereq="fisiologia" data-creditos="3">
+    <div class="titulo">Reproducción Animal</div>
+    <small>Código: 5007572 | Créditos: 3</small>
+    <small>Pre: Fisiología Animal, Alimentos Conc. | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="nutricion_aplicada" data-prereq="alimentos" data-creditos="3">
+    <div class="titulo">Nutrición Animal Aplicada</div>
+    <small>Código: 5007577 | Créditos: 3</small>
+    <small>Pre: Alimentos Conc. para Animales | Co: Ninguno</small>
+  </div>
+  <div class="materia locked" onclick="toggle(this)" data-id="agrostologia" data-prereq="agroecologia" data-creditos="3">
+    <div class="titulo">Agrostología</div>
+    <small>Código: 5007574 | Créditos: 3</small>
+    <small>Pre: Agroecología | Co: Ninguno</small>
+  </div>
+</div>
+<!-- SEMESTRE 7 -->
+<div class="semestre">
+  <h2>7° Semestre</h2>
+
+  <div class="materia locked" onclick="toggle(this)" data-id="electiva_prod" data-prereq="infraestructura" data-creditos="3">
+    <div class="titulo">Electiva Sistema de Producción</div>
+    <small>Código: N/A | Créditos: 3</small>
+    <small>Pre: Infraestructura Agropecuaria | Co: Ninguno</small>
+  </div>
+
+  <div class="materia locked" onclick="toggle(this)" data-id="salud_bienestar" data-prereq="reproduccion" data-creditos="2">
+    <div class="titulo">Salud y Bienestar Animal</div>
+    <small>Código: 5007575 | Créditos: 2</small>
+    <small>Pre: Reproducción Animal | Co: Ninguno</small>
+  </div>
+
+  <div class="materia locked" onclick="toggle(this)" data-id="forrajes" data-prereq="agrostologia" data-creditos="3">
+    <div class="titulo">Manejo y Utilización de Forrajes</div>
+    <small>Código: 5007578 | Créditos: 3</small>
+    <small>Pre: Agrostología | Co: Ninguno</small>
+  </div>
+
+  <div class="materia locked" onclick="toggle(this)" data-id="gestion_proyectos" data-prereq="mercadeo" data-creditos="3">
+    <div class="titulo">Gestión de Proyectos de Inversión</div>
+    <small>Código: 5007640 | Créditos: 3</small>
+    <small>Pre: Mercadeo | Co: Ninguno</small>
+  </div>
+
+  <div class="materia locked" onclick="toggle(this)" data-id="trabajo1" data-prereq="metodologia" data-creditos="1">
+    <div class="titulo">Trabajo de Grado I</div>
+    <small>Código: 5007648 | Créditos: 1</small>
+    <small>Pre: Metodología de la Investigación | Co: Ninguno</small>
+  </div>
+
+  <div class="materia locked" onclick="toggle(this)" data-id="productos_carnicos" data-prereq="infraestructura" data-creditos="3">
+    <div class="titulo">Tecnología de Productos Cárnicos</div>
+    <small>Código: 5007594 | Créditos: 3</small>
+    <small>Pre: Infraestructura Agropecuaria | Co: Ninguno</small>
+  </div>
+</div>
+
+<!-- SEMESTRE 8 -->
+<div class="semestre">
+  <h2>8° Semestre</h2>
+
+  <div class="materia locked" onclick="toggle(this)" data-id="spa" data-prereq="trabajo1" data-creditos="4">
+    <div class="titulo">Sist. de Producción Acuícola</div>
+    <small>Código: 5007581 | Créditos: 4</small>
+    <small>Pre: Trabajo de Grado I | Co: Ninguno</small>
+  </div>
+
+  <div class="materia locked" onclick="toggle(this)" data-id="sbc" data-prereq="trabajo1" data-creditos="4">
+    <div class="titulo">Sist. de Producción Bovina Carne</div>
+    <small>Código: 5007582 | Créditos: 4</small>
+    <small>Pre: Trabajo de Grado I | Co: Ninguno</small>
+  </div>
+
+  <div class="materia locked" onclick="toggle(this)" data-id="sbl" data-prereq="trabajo1" data-creditos="4">
+    <div class="titulo">Sist. de Producción Bovina Leche</div>
+    <small>Código: 5007583 | Créditos: 4</small>
+    <small>Pre: Trabajo de Grado I | Co: Ninguno</small>
+  </div>
+
+  <div class="materia locked" onclick="toggle(this)" data-id="bioetica" data-prereq="salud_bienestar" data-creditos="2">
+    <div class="titulo">Bioética</div>
+    <small>Código: 5007645 | Créditos: 2</small>
+    <small>Pre: Salud y Bienestar Animal | Co: Ninguno</small>
+  </div>
+
+  <div class="materia locked" onclick="toggle(this)" data-id="electiva_prof1" data-prereq="gestion_proyectos" data-creditos="4">
+    <div class="titulo">Electiva Profesionalización I</div>
+    <small>Código: N/A | Créditos: 4</small>
+    <small>Pre: Gestión de Proyectos | Co: Ninguno</small>
+  </div>
+
+  <div class="materia locked" onclick="toggle(this)" data-id="electiva_prof2" data-prereq="electiva_prof1" data-creditos="4">
+    <div class="titulo">Electiva Profesionalización II</div>
+    <small>Código: N/A | Créditos: 4</small>
+    <small>Pre: Profesionalización I | Co: Ninguno</small>
+  </div>
+</div>
+<!-- SEMESTRE 9 -->
+<div class="semestre">
+  <h2>9° Semestre</h2>
+
+  <div class="materia locked" onclick="toggle(this)" data-id="formacion_ciudadana" data-prereq="bioetica" data-creditos="1">
+    <div class="titulo">Formación Ciudadana</div>
+    <small>Código: 5006193 | Créditos: 1</small>
+    <small>Pre: Bioética | Co: Ninguno</small>
+  </div>
+
+  <div class="materia locked" onclick="toggle(this)" data-id="trabajo2" data-prereq="trabajo1" data-creditos="1">
+    <div class="titulo">Trabajo de Grado II</div>
+    <small>Código: 5007649 | Créditos: 1</small>
+    <small>Pre: Trabajo de Grado I | Co: Ninguno</small>
+  </div>
+
+  <div class="materia locked" onclick="toggle(this)" data-id="practica1" data-prereq="trabajo2" data-creditos="8">
+    <div class="titulo">Práctica Profesional I</div>
+    <small>Código: N/A | Créditos: 8</small>
+    <small>Pre: Trabajo de Grado II | Co: Ninguno</small>
+  </div>
+</div>
+
+<!-- SEMESTRE 10 -->
+<div class="semestre">
+  <h2>10° Semestre</h2>
+
+  <div class="materia locked" onclick="toggle(this)" data-id="practica2" data-prereq="practica1" data-creditos="8">
+    <div class="titulo">Práctica Profesional II</div>
+    <small>Código: N/A | Créditos: 8</small>
+    <small>Pre: Práctica Profesional I | Co: Ninguno</small>
+  </div>
+</div>
